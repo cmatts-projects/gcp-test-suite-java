@@ -9,7 +9,8 @@
   <properties>
     <junit.version>5.7.2</junit.version>
     <assertj-core.version>3.20.2</assertj-core.version>
-    <testcontainers.version>1.18.3</testcontainers.version>
+    <testcontainers.version>1.19.8</testcontainers.version>
+    <gcloud.version>1.19.8</gcloud.version>
     <system-stubs-jupiter.version>2.1.1</system-stubs-jupiter.version>
     <google-cloud-version>26.39.0</google-cloud-version>
   </properties>
@@ -31,6 +32,11 @@
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-storage</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-pubsub</artifactId>
     </dependency>
 
     <!-- Junit5 Dependencies -->
@@ -61,6 +67,13 @@
       <groupId>org.testcontainers</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>gcloud</artifactId>
+      <version>${gcloud.version}</version>
       <scope>test</scope>
     </dependency>
 

@@ -28,3 +28,13 @@ Features:
 * Writing content to a bucket
 * Reading content from a bucket
 * Verifying that an object exists
+
+## PubSub
+The PubSub samples demonstrate how to create topics, publish and receive messages.
+
+Features:
+* Creation of a topic
+* Creation of a subscriber
+* Publish messages to a topic
+* Receiving messages from a subscriber
+* Topic purging

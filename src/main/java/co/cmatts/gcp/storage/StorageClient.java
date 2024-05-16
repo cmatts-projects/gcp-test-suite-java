@@ -29,7 +29,7 @@ public class StorageClient {
         if (nonNull(System.getProperty("local.gcs.url"))) {
             builder = builder
                     .setHost(System.getProperty("local.gcs.url"))
-                    .setProjectId("test-project")
+                    .setProjectId(System.getProperty("local.project"))
                     .setCredentials(NoCredentials.getInstance());
         }
 

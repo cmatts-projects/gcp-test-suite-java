@@ -46,7 +46,7 @@ public class StorageClientTest {
 
         systemProperties
                 .set("local.gcs.url", localGCSUrl)
-                .set("local.project", localGCSUrl);
+                .set("local.project", "test-project");
 
         resetStorageClient();
         createBucket(TEST_BUCKET);
