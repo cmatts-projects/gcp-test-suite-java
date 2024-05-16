@@ -50,23 +50,22 @@ public class PubSubClient {
 
     private static TopicAdminSettings getTopicAdminSettings() throws IOException {
         TopicAdminSettings.Builder builder = TopicAdminSettings.newBuilder();
-        builder = (TopicAdminSettings.Builder) configureClientSettings(builder);
+        configureClientSettings(builder);
 
         return builder.build();
     }
 
     private static SubscriptionAdminSettings getSubscriptionAdminSettings() throws IOException {
         SubscriptionAdminSettings.Builder builder = SubscriptionAdminSettings.newBuilder();
-        builder = (SubscriptionAdminSettings.Builder) configureClientSettings(builder);
+        configureClientSettings(builder);
 
         return builder.build();
     }
 
     private static TransportChannelProvider getLocalTransportChannelProvider() {
-        TransportChannelProvider channelProvider = FixedTransportChannelProvider.create(
+        return FixedTransportChannelProvider.create(
                 GrpcTransportChannel.create(getLocalChannel())
         );
-        return channelProvider;
     }
 
     private static ManagedChannel getLocalChannel() {
@@ -92,39 +91,36 @@ public class PubSubClient {
         return localCredentials;
     }
 
-    private static ClientSettings.Builder configureClientSettings(ClientSettings.Builder builder) {
+    private static <T extends ClientSettings<T>, B extends ClientSettings.Builder<T, B>> void configureClientSettings(ClientSettings.Builder<T, B> builder) {
         String target = System.getProperty("local.pubsub.url");
         if (nonNull(target)) {
-            builder = builder
-                    .setTransportChannelProvider(getLocalTransportChannelProvider())
-                    .setCredentialsProvider(getLocalCredentialsProvider());
+            builder
+                .setTransportChannelProvider(getLocalTransportChannelProvider())
+                .setCredentialsProvider(getLocalCredentialsProvider());
         }
-        return builder;
     }
 
-    private static Publisher.Builder configurePublisherSettings(Publisher.Builder builder) {
+    private static void configurePublisherSettings(Publisher.Builder builder) {
         String target = System.getProperty("local.pubsub.url");
         if (nonNull(target)) {
-            builder = builder
-                    .setChannelProvider(getLocalTransportChannelProvider())
-                    .setCredentialsProvider(getLocalCredentialsProvider());
+            builder
+                .setChannelProvider(getLocalTransportChannelProvider())
+                .setCredentialsProvider(getLocalCredentialsProvider());
         }
-        return builder;
     }
 
-    private static SubscriberStubSettings.Builder configureSubscriberStubSettings(SubscriberStubSettings.Builder builder) {
+    private static void configureSubscriberStubSettings(SubscriberStubSettings.Builder builder) {
         String target = System.getProperty("local.pubsub.url");
         if (nonNull(target)) {
-            builder = builder
-                    .setTransportChannelProvider(getLocalTransportChannelProvider())
-                    .setCredentialsProvider(getLocalCredentialsProvider());
+            builder
+                .setTransportChannelProvider(getLocalTransportChannelProvider())
+                .setCredentialsProvider(getLocalCredentialsProvider());
         }
-        return builder;
     }
 
     public static void publishMessage(String topicId, String message) throws IOException {
         Publisher.Builder builder = Publisher.newBuilder(TopicName.of(System.getProperty("local.project"), topicId));
-        builder = configurePublisherSettings(builder);
+        configurePublisherSettings(builder);
         Publisher publisher = builder.build();
 
         PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
@@ -135,7 +131,7 @@ public class PubSubClient {
 
     public static List<String> readMessage(String subscriptionId) throws IOException {
         SubscriberStubSettings.Builder builder = SubscriberStubSettings.newBuilder();
-        builder = configureSubscriberStubSettings(builder);
+        configureSubscriberStubSettings(builder);
         SubscriberStubSettings subscriberStubSettings = builder.build();
 
         try (SubscriberStub subscriber = GrpcSubscriberStub.create(subscriberStubSettings)) {
