@@ -38,3 +38,14 @@ Features:
 * Publish messages to a topic
 * Receiving messages from a subscriber
 * Topic purging
+
+## Firestore
+The Firestore samples demonstrate how to read and write to data to Firestore collections.
+
+Features:
+* Batch loading data
+* Basic queries
+* Range queries
+* Transactional updates
+* Collection name class mapping
+* Lombok based pojo's
