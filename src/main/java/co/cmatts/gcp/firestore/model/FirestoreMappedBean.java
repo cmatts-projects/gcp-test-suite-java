@@ -6,8 +6,4 @@ public interface FirestoreMappedBean {
     }
 
     String getId();
-
-    Long getVersion();
-
-    void setVersion(Long version);
 }

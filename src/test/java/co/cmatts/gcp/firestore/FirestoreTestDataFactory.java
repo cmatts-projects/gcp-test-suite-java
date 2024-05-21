@@ -83,7 +83,6 @@ public class FirestoreTestDataFactory {
                 .motherId((String) PEOPLE_DATA[index][2])
                 .yearOfBirth((Integer) PEOPLE_DATA[index][3])
                 .yearOfDeath((Integer) PEOPLE_DATA[index][4])
-                .version(1L)
                 .build();
     }
 
@@ -102,7 +101,6 @@ public class FirestoreTestDataFactory {
                 .image((String) FACT_DATA[index][2])
                 .source((String) FACT_DATA[index][3])
                 .description((String) FACT_DATA[index][4])
-                .version(1L)
                 .build();
     }
 

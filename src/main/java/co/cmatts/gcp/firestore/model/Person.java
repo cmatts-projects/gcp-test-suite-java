@@ -14,7 +14,6 @@ public class Person implements FirestoreMappedBean {
     private Integer yearOfDeath;
     private String fatherId;
     private String motherId;
-    private Long version;
 
     @Override
     public String tableName() {

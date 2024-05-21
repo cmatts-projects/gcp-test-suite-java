@@ -14,7 +14,6 @@ public class Fact implements FirestoreMappedBean {
     private String image;
     private String source;
     private String description;
-    private Long version;
 
     @Override
     public String tableName() {
