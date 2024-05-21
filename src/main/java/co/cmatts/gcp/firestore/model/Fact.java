@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Fact implements FirestoreMappedBean {
-    private Integer id;
-    private Integer personId;
+    private String id;
+    private String personId;
     private Integer year;
     private String image;
     private String source;

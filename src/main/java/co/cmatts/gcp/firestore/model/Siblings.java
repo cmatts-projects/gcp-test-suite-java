@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -48,20 +49,24 @@ public class Siblings {
         return allSiblings.stream()
                 .filter(s -> Objects.equals(s.getFatherId(), person.getFatherId()) &&
                         Objects.equals(s.getMotherId(), person.getMotherId()))
-                .sorted((a, b) -> (a.getYearOfBirth() > b.getYearOfBirth() ||
-                        (Objects.equals(a.getYearOfBirth(), b.getYearOfBirth()) && a.getId() > b.getId())) ? 1 : -1)
+                .sorted(this::comparePeople)
                 .collect(toList());
     }
 
-    private int sortByParentYear(Person a, Person b, Integer aParentId, Integer bParentId) {
+    private int comparePeople(Person a, Person b) {
+        return a.getYearOfBirth() > b.getYearOfBirth() ||
+                (Objects.equals(a.getYearOfBirth(), b.getYearOfBirth()) && StringUtils.compare(a.getId(), b.getId()) > 0) ? 1 : -1;
+    }
+
+    private int sortByParentYear(Person a, Person b, String aParentId, String bParentId) {
         return
                 (Objects.equals(aParentId, bParentId) &&
                         (b.getYearOfBirth() == null ||
                                 (a.getYearOfBirth() != null && (a.getYearOfBirth() > b.getYearOfBirth() ||
-                                        (Objects.equals(a.getYearOfBirth(), b.getYearOfBirth()) && a.getId() > b.getId())))))
+                                        (Objects.equals(a.getYearOfBirth(), b.getYearOfBirth()) && StringUtils.compare(a.getId(), b.getId()) > 0)))))
                         ||
                         (!Objects.equals(aParentId, bParentId) &&
-                                ((aParentId != null && bParentId == null) || (aParentId != null && aParentId > bParentId)))
+                                ((aParentId != null && bParentId == null) || (aParentId != null && StringUtils.compare(aParentId, bParentId) > 0)))
                         ? 1 : -1;
     }
 }

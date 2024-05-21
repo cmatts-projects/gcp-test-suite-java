@@ -58,12 +58,12 @@ public class FirestoreRepository {
         return getFirestoreClient().collection(collectionName);
     }
 
-    public Optional<Person> findPerson(Integer id) throws ExecutionException, InterruptedException {
+    public Optional<Person> findPerson(String id) throws ExecutionException, InterruptedException {
         if (id == null) {
             return Optional.empty();
         }
 
-        DocumentReference result = getFirestoreCollection(Person.class).document(Integer.toString(id));
+        DocumentReference result = getFirestoreCollection(Person.class).document(id);
 
         ApiFuture<DocumentSnapshot> future = result.get();
         DocumentSnapshot document = future.get();
@@ -73,19 +73,19 @@ public class FirestoreRepository {
         return Optional.empty();
     }
 
-    public List<Person> findPersonByFather(Integer id) throws ExecutionException, InterruptedException {
+    public List<Person> findPersonByFather(String id) throws ExecutionException, InterruptedException {
         return findEntitiesByAttribute(id, Person.class, "fatherId");
     }
 
-    public List<Person> findPersonByMother(Integer id) throws ExecutionException, InterruptedException {
+    public List<Person> findPersonByMother(String id) throws ExecutionException, InterruptedException {
         return findEntitiesByAttribute(id, Person.class, "motherId");
     }
 
-    public List<Fact> findFacts(Integer id) throws ExecutionException, InterruptedException {
+    public List<Fact> findFacts(String id) throws ExecutionException, InterruptedException {
         return findEntitiesByAttribute(id, Fact.class, "personId");
     }
 
-    private <T extends FirestoreMappedBean> List<T> findEntitiesByAttribute(Integer id, Class<T> beanClass, String attrName) throws ExecutionException, InterruptedException {
+    private <T extends FirestoreMappedBean> List<T> findEntitiesByAttribute(String id, Class<T> beanClass, String attrName) throws ExecutionException, InterruptedException {
         if (id == null) {
             return emptyList();
         }
@@ -97,7 +97,7 @@ public class FirestoreRepository {
                 .toObjects(beanClass);
     }
 
-    public Siblings findSiblings(Integer id) throws ExecutionException, InterruptedException {
+    public Siblings findSiblings(String id) throws ExecutionException, InterruptedException {
         Optional<Person> p = findPerson(id);
         if (p.isEmpty()) {
             return new Siblings();
@@ -113,7 +113,7 @@ public class FirestoreRepository {
     }
 
     private List<Person> extractParents(Set<Person> allSiblings) throws ExecutionException, InterruptedException {
-        List<Integer> parentIds = allSiblings.stream()
+        List<String> parentIds = allSiblings.stream()
                 .map(s -> asList(s.getFatherId(), s.getMotherId()))
                 .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
@@ -121,7 +121,7 @@ public class FirestoreRepository {
                 .toList();
 
         List<Person> parents = new ArrayList<>();
-        for(Integer parentId : parentIds) {
+        for(String parentId : parentIds) {
             parents.add(findPerson(parentId).get());
         }
         return parents.stream()
@@ -149,7 +149,7 @@ public class FirestoreRepository {
     private void loadBatch(List<FirestoreMappedBean> data) throws ExecutionException, InterruptedException {
         WriteBatch batch = getFirestoreClient().batch();
 
-        data.forEach(entity -> batch.set(getFirestoreCollection(entity.getClass()).document(Integer.toString(entity.getId())), entity));
+        data.forEach(entity -> batch.set(getFirestoreCollection(entity.getClass()).document(entity.getId()), entity));
 
         ApiFuture<List<WriteResult>> future = batch.commit();
         future.get();
@@ -161,7 +161,7 @@ public class FirestoreRepository {
                         transaction -> {
                             for (FirestoreMappedBean entity : entities) {
                                 transaction.set(getFirestoreCollection(entity.getClass())
-                                        .document(Integer.toString(entity.getId())), entity);
+                                        .document(entity.getId()), entity);
                             }
                             return null;
                         });

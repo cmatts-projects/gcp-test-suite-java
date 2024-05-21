@@ -44,56 +44,56 @@ class FirestoreRepositoryTest {
 
     @Test
     void shouldFindPerson() throws Exception {
-        Optional<Person> result = repo.findPerson(1);
+        Optional<Person> result = repo.findPerson("1");
         assertThat(result.isPresent()).isTrue();
 
         Person p = result.get();
-        assertThat(p.getId()).isEqualTo(1);
+        assertThat(p.getId()).isEqualTo("1");
         assertThat(p.getYearOfBirth()).isEqualTo(1900);
         assertThat(p.getYearOfDeath()).isEqualTo(1990);
-        assertThat(p.getFatherId()).isEqualTo(16);
-        assertThat(p.getMotherId()).isEqualTo(17);
+        assertThat(p.getFatherId()).isEqualTo("16");
+        assertThat(p.getMotherId()).isEqualTo("17");
         assertThat(p.toString())
                 .isEqualTo(person(1).toString());
     }
 
     @Test
 	void shouldNotFindPerson() throws Exception {
-        Optional<Person> result = repo.findPerson(99);
+        Optional<Person> result = repo.findPerson("99");
         assertThat(result.isPresent()).isFalse();
     }
 
     @Test
 	void shouldFindFactsForPerson() throws Exception {
-        List<Fact> facts = repo.findFacts(1);
+        List<Fact> facts = repo.findFacts("1");
         assertThat(facts).hasSize(3);
         assertThat(facts).containsExactlyInAnyOrder(fact(1), fact(2), fact(3));
-        assertThat(facts.stream().filter(f -> f.getId() == 2).findAny().get().toString())
+        assertThat(facts.stream().filter(f -> f.getId().equals("2")).findAny().get().toString())
                 .isEqualTo(fact(2).toString());
     }
 
     @Test
 	void shouldNotFindFacts() throws Exception {
-        List<Fact> facts = repo.findFacts(99);
+        List<Fact> facts = repo.findFacts("99");
         assertThat(facts).hasSize(0);
     }
 
     @Test
 	void shouldFindAllSiblingsGroupedByParentsAndInOrderOfYearOfBirth() throws Exception {
-        Siblings siblings = repo.findSiblings(1);
+        Siblings siblings = repo.findSiblings("1");
         assertThat(siblings).isEqualTo(PERSON_1_SIBLINGS);
     }
 
     @Test
 	void shouldFindSiblingsWithNoMotherAssumingTheSameMother() throws Exception {
-        Siblings siblings = repo.findSiblings(3);
+        Siblings siblings = repo.findSiblings("3");
 
         assertThat(siblings).isEqualTo(PERSON_3_SIBLINGS);
     }
 
     @Test
 	void shouldFindSiblingsWithNoFatherAssumingTheSameFather() throws Exception {
-        Siblings siblings = repo.findSiblings(8);
+        Siblings siblings = repo.findSiblings("8");
 
         assertThat(siblings).isEqualTo(PERSON_8_SIBLINGS);
     }
@@ -108,18 +108,18 @@ class FirestoreRepositoryTest {
 
     @Test
     void shouldUpdateEntities() throws Exception {
-        Person person = repo.findPerson(21).get();
+        Person person = repo.findPerson("21").get();
         person.setYearOfBirth(1799);
         person.setYearOfDeath(1888);
 
-        Fact fact = repo.findFacts(21).get(0);
+        Fact fact = repo.findFacts("21").get(0);
         fact.setImage("Updated");
         fact.setDescription("A changed description");
 
         repo.updateEntities(asList(person, fact));
 
-        Person updatedPerson = repo.findPerson(21).get();
-        Fact updatedFact = repo.findFacts(21).get(0);
+        Person updatedPerson = repo.findPerson("21").get();
+        Fact updatedFact = repo.findFacts("21").get(0);
 
         assertThat(updatedPerson.toString()).isEqualTo(person.toString());
         assertThat(updatedFact.toString()).isEqualTo(fact.toString());

@@ -14,6 +14,7 @@
     <system-stubs-jupiter.version>2.1.1</system-stubs-jupiter.version>
     <google-cloud-version>26.39.0</google-cloud-version>
     <lombok.version>1.18.20</lombok.version>
+    <commons-lang3.version>3.14.0</commons-lang3.version>
   </properties>
 
   <dependencyManagement>
@@ -51,6 +52,13 @@
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
       <scope>provided</scope>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
     </dependency>
 
     <!-- Junit5 Dependencies -->

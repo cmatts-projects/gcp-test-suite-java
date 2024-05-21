@@ -5,7 +5,7 @@ public interface FirestoreMappedBean {
         return Runtime.class.getClass().getSimpleName().toLowerCase();
     }
 
-    Integer getId();
+    String getId();
 
     Long getVersion();
 

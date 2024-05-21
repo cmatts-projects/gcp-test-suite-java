@@ -8,12 +8,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Person implements FirestoreMappedBean {
-    private Integer id;
+    private String id;
     private String name;
     private Integer yearOfBirth;
     private Integer yearOfDeath;
-    private Integer fatherId;
-    private Integer motherId;
+    private String fatherId;
+    private String motherId;
     private Long version;
 
     @Override
