@@ -87,7 +87,7 @@ public class FirestoreTestDataFactory {
     }
 
     public static List<Fact> factDataList() {
-        return IntStream.range(0, FACT_DATA.length)
+        return IntStream.range(0, factCount())
                 .mapToObj(i -> fact(i + 1))
                 .collect(Collectors.toList());
     }

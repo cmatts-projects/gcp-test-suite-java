@@ -74,18 +74,18 @@ public class FirestoreRepository {
     }
 
     public List<Person> findPersonByFather(String id) throws ExecutionException, InterruptedException {
-        return findEntitiesByAttribute(id, Person.class, "fatherId");
+        return findEntitiesByAttribute(Person.class, "fatherId", id);
     }
 
     public List<Person> findPersonByMother(String id) throws ExecutionException, InterruptedException {
-        return findEntitiesByAttribute(id, Person.class, "motherId");
+        return findEntitiesByAttribute(Person.class, "motherId", id);
     }
 
     public List<Fact> findFacts(String id) throws ExecutionException, InterruptedException {
-        return findEntitiesByAttribute(id, Fact.class, "personId");
+        return findEntitiesByAttribute(Fact.class, "personId", id);
     }
 
-    private <T extends FirestoreMappedBean> List<T> findEntitiesByAttribute(String id, Class<T> beanClass, String attrName) throws ExecutionException, InterruptedException {
+    private <T extends FirestoreMappedBean> List<T> findEntitiesByAttribute(Class<T> beanClass, String attrName, String id) throws ExecutionException, InterruptedException {
         if (id == null) {
             return emptyList();
         }
