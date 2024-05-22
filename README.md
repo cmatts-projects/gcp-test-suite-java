@@ -28,6 +28,7 @@ Features:
 * Writing content to a bucket
 * Reading content from a bucket
 * Verifying that an object exists
+* Storage emulation with TestContainers
 
 ## PubSub
 The PubSub samples demonstrate how to create topics, publish and receive messages.
@@ -38,6 +39,7 @@ Features:
 * Publish messages to a topic
 * Receiving messages from a subscriber
 * Topic purging
+* PubSub emulation with TestContainers
 
 ## Firestore
 The Firestore samples demonstrate how to read and write to data to Firestore collections.
@@ -49,3 +51,14 @@ Features:
 * Transactional updates
 * Collection name class mapping
 * Lombok based pojo's
+* Firestore emulation with TestContainers
+
+## Datastore
+The Datastore samples demonstrate how to read and write to data to a Firestore in Datastore mode using Objectify.
+
+Features:
+* Objectify pojo's
+* Loading data using the Objectify Service
+* Saving data using the Objectify Service
+* Using filters when loading data
+* Datastore emulation with TestContainers

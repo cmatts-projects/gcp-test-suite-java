@@ -15,6 +15,7 @@
     <google-cloud-version>26.39.0</google-cloud-version>
     <lombok.version>1.18.20</lombok.version>
     <commons-lang3.version>3.14.0</commons-lang3.version>
+    <objectify.version>6.1.1</objectify.version>
   </properties>
 
   <dependencyManagement>
@@ -44,6 +45,13 @@
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-firestore</artifactId>
+    </dependency>
+
+    <!-- Objectify libraries -->
+    <dependency>
+      <groupId>com.googlecode.objectify</groupId>
+      <artifactId>objectify</artifactId>
+      <version>${objectify.version}</version>
     </dependency>
 
     <!-- Project lombok -->
