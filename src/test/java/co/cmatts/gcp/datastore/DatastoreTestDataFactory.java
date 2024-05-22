@@ -69,7 +69,7 @@ public class DatastoreTestDataFactory {
                 .build();
 
     public static List<Person> peopleDataList() {
-        return IntStream.range(0, PEOPLE_DATA.length)
+        return IntStream.range(0, peopleCount())
                 .mapToObj(i -> person(i + 1))
                 .collect(Collectors.toList());
     }

@@ -9,7 +9,6 @@ import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Result;
 import com.googlecode.objectify.util.Closeable;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -49,9 +48,7 @@ public class DatastoreRepository {
 
     public List<Person> findPeople() {
         try (Closeable session = ObjectifyService.begin()) {
-            return ofy().load().type(Person.class).stream()
-                    .sorted((a, b) -> StringUtils.compare(a.getName(), b.getName()))
-                    .collect(toList());
+            return ofy().load().type(Person.class).order("name").list();
         }
     }
 

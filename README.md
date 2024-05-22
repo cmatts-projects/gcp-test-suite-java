@@ -58,6 +58,7 @@ The Datastore samples demonstrate how to read and write to data to a Firestore i
 
 Features:
 * Objectify pojo's
+* Use of Objectify indexes
 * Loading data using the Objectify Service
 * Saving data using the Objectify Service
 * Using filters when loading data

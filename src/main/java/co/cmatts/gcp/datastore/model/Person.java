@@ -17,10 +17,13 @@ import java.util.List;
 public class Person {
     @Id
     private String id;
+    @Index
     private String name;
     private Integer yearOfBirth;
     private Integer yearOfDeath;
-    @Index private String fatherId;
-    @Index private String motherId;
+    @Index
+    private String fatherId;
+    @Index
+    private String motherId;
     private List<Fact> facts = new ArrayList<>();
 }
